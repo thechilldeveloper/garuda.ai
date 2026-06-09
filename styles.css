@@ -1175,6 +1175,25 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .form-row { flex-direction: column; }
   .hero-stats { gap: 20px; }
   .stat-divider { display: none; }
+
+  /* Fix chat input + button overflow on mobile */
+  .chat-input-wrapper {
+    flex-wrap: wrap;
+    padding: 10px 12px;
+    gap: 10px;
+  }
+  .chat-input-icon { display: none; }
+  .chat-input {
+    width: 100%;
+    flex: none;
+    font-size: 14px;
+  }
+  .chat-send {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 16px;
+    border-radius: 8px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
