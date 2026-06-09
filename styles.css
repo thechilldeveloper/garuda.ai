@@ -934,36 +934,86 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   color: #fff;
 }
 
-/* ─── Roadmap ────────────────────────────────────────────────────── */
-.roadmap { padding: 96px 0; background: var(--color-off-white); }
+/* ─── Animations ─────────────────────────────────────────────────── */
 
-.moscow-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
-
-.moscow-card {
-  border-radius: var(--radius-md);
-  padding: 24px;
-  border-top: 3px solid;
+/* Hero entrance — staggered fade-up */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
-.moscow-card.must { background: rgba(22,163,74,0.05); border-color: #16a34a; }
-.moscow-card.should { background: rgba(17,137,179,0.05); border-color: var(--color-teal); }
-.moscow-card.could { background: rgba(217,119,6,0.05); border-color: #d97706; }
-.moscow-card.wont { background: rgba(100,116,139,0.05); border-color: #64748b; }
 
-.moscow-label {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  margin-bottom: 16px;
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
-.must .moscow-label { color: #16a34a; }
-.should .moscow-label { color: var(--color-teal); }
-.could .moscow-label { color: #d97706; }
-.wont .moscow-label { color: #64748b; }
 
-.moscow-card ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-.moscow-card ul li { font-size: 14px; color: var(--color-text); padding-left: 16px; position: relative; line-height: 1.5; }
-.moscow-card ul li::before { content: "·"; position: absolute; left: 0; font-size: 18px; line-height: 1.2; color: var(--color-text-muted); }
+@keyframes floatA {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%       { transform: translateY(-22px) scale(1.04); }
+}
+
+@keyframes floatB {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%       { transform: translateY(18px) scale(0.97); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes borderGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,194,224,0); }
+  50%       { box-shadow: 0 0 0 6px rgba(0,194,224,0.12); }
+}
+
+/* Hero element entrance */
+.hero-badge  { animation: fadeInUp 0.6s ease-out 0.1s both; }
+.hero-title  { animation: fadeInUp 0.7s ease-out 0.25s both; }
+.hero-subtitle { animation: fadeInUp 0.7s ease-out 0.4s both; }
+.hero-chat   { animation: fadeInUp 0.7s ease-out 0.55s both; }
+.hero-stats  { animation: fadeInUp 0.6s ease-out 0.7s both; }
+.hero-scroll { animation: fadeIn 1s ease-out 1.2s both; }
+
+/* Floating orbs */
+.orb-1 { animation: floatA 9s ease-in-out infinite; }
+.orb-2 { animation: floatB 11s ease-in-out infinite; }
+.cta-orb-1 { animation: floatA 10s ease-in-out infinite; }
+.cta-orb-2 { animation: floatB 13s ease-in-out infinite; }
+
+/* Shimmer on gradient text */
+.gradient-text {
+  background: linear-gradient(130deg, #fff 0%, #5dd8f0 30%, #1189b3 50%, #5dd8f0 70%, #fff 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 5s linear infinite;
+}
+
+/* Scroll-reveal base state — JS will toggle .revealed */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.55s ease-out, transform 0.55s ease-out;
+}
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger siblings inside a grid */
+.reveal:nth-child(2) { transition-delay: 0.08s; }
+.reveal:nth-child(3) { transition-delay: 0.16s; }
+.reveal:nth-child(4) { transition-delay: 0.24s; }
+.reveal:nth-child(5) { transition-delay: 0.32s; }
+.reveal:nth-child(6) { transition-delay: 0.40s; }
+
+/* Pulse glow on active agent dots */
+.agent-dot.active { animation: pulse 1.5s ease-in-out infinite, borderGlow 2s ease-in-out infinite; }
+
+/* Stat value counter — highlight colour when animating */
+.stat-value.counting { color: var(--color-primary); transition: color 0.3s ease; }
 
 /* ─── CTA Section ───────────────────────────────────────────────── */
 .cta-section {
